@@ -8,6 +8,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select"
 import { Link, createFileRoute } from "@tanstack/react-router"
+import { ChevronRight } from "lucide-react"
 
 export const Route = createFileRoute("/(home)/")({
 	component: HomePage,
@@ -69,6 +70,9 @@ const jobs: Job[] = [
 function HomePage() {
 	return (
 		<main className="mx-auto max-w-5xl px-6 py-16">
+			<div className="mb-2 text-sm text-muted-foreground">
+				<Link to="/dashboard" className="text-muted-foreground inline-flex items-center font-medium"> <ChevronRight size={16} className="size-4 mr-2" /> Go to Dashboard</Link>
+			</div>
 			<div className="mb-8 text-center">
 				<h1 className="text-3xl font-bold">Open Positions</h1>
 			</div>

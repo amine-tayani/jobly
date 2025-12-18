@@ -10,12 +10,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { type ApplicationFormSchema, insertApplicationSchema } from "@/lib/db/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, createFileRoute } from '@tanstack/react-router';
 import { ChevronLeft } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
 
 
 export const Route = createFileRoute('/jobs/$jobId')({
@@ -24,14 +20,7 @@ export const Route = createFileRoute('/jobs/$jobId')({
 
 function RouteComponent() {
 
-  const form = useForm<ApplicationFormSchema>(
-    { resolver: zodResolver(insertApplicationSchema), defaultValues: {} }
-  )
 
-  const onSubmit = async (values: ApplicationFormSchema) => {
-    toast.info("Spontaneous application feature coming soon!")
-    console.log(values);
-  };
 
   return (
     <div>
