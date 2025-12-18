@@ -1,27 +1,19 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 import {
-	Dialog, DialogContent, DialogHeader,
+	Dialog,
+	DialogContent,
+	DialogHeader,
 	DialogTitle,
-	DialogTrigger
-} from "@/components/ui/dialog";
-import { type ApplicationFormSchema, insertApplicationSchema } from "@/lib/db/schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { toast } from "sonner";
-import { ApplicationForm } from "./application-form";
+	DialogTrigger,
+} from "@/components/ui/dialog"
+import { useState } from "react"
+import { ApplicationForm } from "./application-form"
 
 export function ApplySpontaneousDialog() {
-	const form = useForm<ApplicationFormSchema>(
-		{ resolver: zodResolver(insertApplicationSchema), defaultValues: {} }
-	)
-
-	const onSubmit = async (values: ApplicationFormSchema) => {
-		toast.info("Spontaneous application feature coming soon!")
-		console.log(values);
-	};
+	const [open, setOpen] = useState(false)
 
 	return (
-		<Dialog>
+		<Dialog open={open} onOpenChange={setOpen}>
 			<DialogTrigger asChild>
 				<Button className="bg-orange-500 hover:bg-orange-600">
 					Apply spontaneously
@@ -31,7 +23,7 @@ export function ApplySpontaneousDialog() {
 				<DialogHeader>
 					<DialogTitle>Apply spontaneously</DialogTitle>
 				</DialogHeader>
-				<ApplicationForm />
+				<ApplicationForm onClose={() => setOpen(false)} />
 			</DialogContent>
 		</Dialog>
 	)

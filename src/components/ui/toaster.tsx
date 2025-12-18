@@ -7,7 +7,7 @@ export const Toaster = () => {
       richColors
       expand
       position="bottom-right"
-      theme="dark"
+      theme="light"
       className="toaster group"
     />
   );

@@ -14,6 +14,7 @@ yarn.lock
 routeTree.gen.ts
 
 /build/
+/uploads/
 /api/
 /server/build
 /public/build
