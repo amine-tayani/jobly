@@ -7,77 +7,95 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select"
+import { Skeleton } from "@/components/ui/skeleton"
+import { db } from "@/lib/db"
+import { Route as jobRoute } from "@/routes/jobs/$jobId"
+import { useQuery } from "@tanstack/react-query"
 import { Link, createFileRoute } from "@tanstack/react-router"
+import { createServerFn } from "@tanstack/react-start"
 import { ChevronRight } from "lucide-react"
 
 export const Route = createFileRoute("/(home)/")({
 	component: HomePage,
 })
 
-type Job = {
-	id: string
-	title: string
-	department: string
-	location: string
-	type: "Hybrid" | "Remote" | "Onsite"
-}
+const getJobListings = createServerFn().handler(async () => {
+	const data = await db.query.jobs.findMany({
+		columns: {
+			createdAt: false,
+			updatedAt: false,
+		},
+	})
+	return data
+})
 
-const jobs: Job[] = [
-	{
-		id: "1",
-		title: "Software engineer",
-		department: "Engineering",
-		type: "Hybrid",
-		location: "Rabat, Morocco",
-	},
-	{
-		id: "2",
-		title: "UX Designer",
-		department: "Design",
-		type: "Hybrid",
-		location: "Rabat, Morocco",
-	},
-	{
-		id: "3",
-		title: "Product Manager",
-		department: "Product",
-		type: "Hybrid",
-		location: "Rabat, Morocco",
-	},
-	{
-		id: "4",
-		title: "Graphic Designer",
-		department: "Design",
-		type: "Hybrid",
-		location: "Rabat, Morocco",
-	},
-	{
-		id: "5",
-		title: "Marketing Manager",
-		department: "Marketing",
-		type: "Hybrid",
-		location: "Rabat, Morocco",
-	},
-	{
-		id: "6",
-		title: "Account Manager",
-		department: "Customer Success",
-		type: "Hybrid",
-		location: "Rabat, Morocco",
-	},
-]
+// const jobs: Job[] = [
+// 	{
+// 		id: "1",
+// 		title: "Software engineer",
+// 		department: "Engineering",
+// 		type: "Hybrid",
+// 		location: "Rabat, Morocco",
+// 	},
+// 	{
+// 		id: "2",
+// 		title: "UX Designer",
+// 		department: "Design",
+// 		type: "Hybrid",
+// 		location: "Rabat, Morocco",
+// 	},
+// 	{
+// 		id: "3",
+// 		title: "Product Manager",
+// 		department: "Product",
+// 		type: "Hybrid",
+// 		location: "Rabat, Morocco",
+// 	},
+// 	{
+// 		id: "4",
+// 		title: "Graphic Designer",
+// 		department: "Design",
+// 		type: "Hybrid",
+// 		location: "Rabat, Morocco",
+// 	},
+// 	{
+// 		id: "5",
+// 		title: "Marketing Manager",
+// 		department: "Marketing",
+// 		type: "Hybrid",
+// 		location: "Rabat, Morocco",
+// 	},
+// 	{
+// 		id: "6",
+// 		title: "Account Manager",
+// 		department: "Customer Success",
+// 		type: "Hybrid",
+// 		location: "Rabat, Morocco",
+// 	},
+// ]
 
 function HomePage() {
+	const { data: jobs = [], isLoading } = useQuery({
+		queryKey: ["jobListings"],
+		queryFn: getJobListings,
+	})
+
 	return (
 		<main className="mx-auto max-w-5xl px-6 py-16">
 			<div className="mb-2 text-sm text-muted-foreground">
-				<Link to="/dashboard" className="text-muted-foreground inline-flex items-center font-medium"> <ChevronRight size={16} className="size-4 mr-2" /> Go to Dashboard</Link>
+				<Link
+					to="/dashboard"
+					className="text-muted-foreground inline-flex items-center font-medium"
+				>
+					{" "}
+					<ChevronRight size={16} className="size-4 mr-2" /> Go to Dashboard
+				</Link>
 			</div>
 			<div className="mb-8 text-center">
 				<h1 className="text-3xl font-bold">Open Positions</h1>
 			</div>
 
-			<div className="mb-10 px-6 flex justify-between">
+			<div className="mb-10 px-6 flex justify-between items-center">
 				<p className="mt-3 text-muted-foreground font-semibold">
 					We have {jobs.length} open positions
 				</p>
@@ -97,29 +115,55 @@ function HomePage() {
 			</div>
 
 			<div className="divide-y">
-				{jobs.map((job) => (
-					<Link
-						to={`/jobs/${job.id}`}
-						key={job.id}
-						className="grid grid-cols-1 md:grid-cols-5 gap-4 px-6 space-y-3 items-center"
-					>
-						<div className="md:col-span-2">
-							<h3 className="text-lg font-medium">{job.title}</h3>
-							<p className="text-sm text-muted-foreground">{job.department}</p>
+				{isLoading
+					? Array.from({ length: 5 }).map((_, index) => (
+						<div
+							key={index}
+							className="grid grid-cols-1 md:grid-cols-5 py-2 first:pt-0 last:pb-0 gap-4 px-6 space-y-3 items-center"
+						>
+							<div className="md:col-span-2 space-y-2">
+								<Skeleton className="h-6 w-3/4" />
+								<Skeleton className="h-4 w-1/2" />
+							</div>
+							<div className="hidden md:flex justify-center">
+								<Skeleton className="h-4 w-16" />
+							</div>
+							<div className="hidden md:flex justify-center">
+								<Skeleton className="h-4 w-24" />
+							</div>
+							<div className="flex justify-end">
+								<Skeleton className="h-9 w-16" />
+							</div>
 						</div>
-						<div className="hidden md:flex justify-center">
-							<span className="text-sm text-muted-foreground">{job.type}</span>
-						</div>
-						<div className="hidden md:flex justify-center">
-							<span className="text-sm text-muted-foreground">
-								{job.location}
-							</span>
-						</div>
-						<div className="flex justify-end">
-							<Button variant="outline">Apply</Button>
-						</div>
-					</Link>
-				))}
+					))
+					: jobs.map((job) => (
+						<Link
+							to={jobRoute.to}
+							params={{ jobId: job.id }}
+							key={job.id}
+							className="grid grid-cols-1 md:grid-cols-5 gap-4 px-6 space-y-3 items-center"
+						>
+							<div className="md:col-span-2">
+								<h3 className="text-lg font-medium">{job.title}</h3>
+								<p className="text-sm text-muted-foreground">
+									{job.department}
+								</p>
+							</div>
+							<div className="hidden md:flex justify-center">
+								<span className="text-sm text-muted-foreground capitalize">
+									{job.type}
+								</span>
+							</div>
+							<div className="hidden md:flex justify-center">
+								<span className="text-sm text-muted-foreground">
+									{job.location}
+								</span>
+							</div>
+							<div className="flex justify-end">
+								<Button variant="outline">Apply</Button>
+							</div>
+						</Link>
+					))}
 			</div>
 
 			<div className="mt-16 text-center">

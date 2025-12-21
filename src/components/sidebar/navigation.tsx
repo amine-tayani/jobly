@@ -4,10 +4,10 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem
 } from "@/components/ui/sidebar";
-import { useLocation } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import type { LucideIcon } from "lucide-react";
 
-export function MainNav({
+export function Navigation({
 	items
 }: {
 	items: {
@@ -16,9 +16,7 @@ export function MainNav({
 		icon?: LucideIcon;
 	}[];
 }) {
-	const pathname = useLocation({
-		select: (location) => location.pathname
-	});
+
 	return (
 		<SidebarGroup>
 			<SidebarGroupContent className="px-2">
@@ -26,10 +24,10 @@ export function MainNav({
 					{items.map((item) => (
 						<SidebarMenuItem key={item.title}>
 							<SidebarMenuButton tooltip={item.title} asChild>
-								<div>
-									{item.icon && <item.icon className="mr-1.5 stroke-2" />}
+								<Link to={item.url} className="inline-flex">
+									{item.icon && <item.icon className="mr-1" />}
 									{item.title}
-								</div>
+								</Link>
 
 							</SidebarMenuButton>
 						</SidebarMenuItem>

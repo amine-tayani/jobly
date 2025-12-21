@@ -7,47 +7,26 @@ import {
 	useSidebar
 } from "@/components/ui/sidebar";
 import { Link } from "@tanstack/react-router";
-import {
-	ArrowLeftRightIcon, CalendarDaysIcon,
-	ClipboardIcon,
-	EclipseIcon,
-	HomeIcon, SidebarIcon,
-	WalletCardsIcon
-} from "lucide-react";
-import { MainNav } from "./main-nav";
+import { BookmarkIcon, BriefcaseIcon, HomeIcon, SidebarIcon } from "lucide-react";
+import { Navigation } from "./navigation";
 
 const data = {
-	mainNavigation: [
+	nav: [
 		{
 			title: "Home",
 			url: "/dashboard",
 			icon: HomeIcon
 		},
 		{
-			title: "Accounts",
-			url: "/dashboard/accounts",
-			icon: WalletCardsIcon
+			title: "Jobs Listings",
+			url: "/dashboard/jobs",
+			icon: BriefcaseIcon
 		},
 		{
-			title: "Transactions",
-			url: "/dashboard/transactions",
-			icon: ArrowLeftRightIcon
+			title: "Applications",
+			url: "/dashboard/applications",
+			icon: BookmarkIcon
 		},
-		{
-			title: "Spending Plan",
-			url: "/dashboard/spending",
-			icon: EclipseIcon
-		},
-		{
-			title: "Upcomings",
-			url: "/dashboard/upcomings",
-			icon: CalendarDaysIcon
-		},
-		{
-			title: "Reports",
-			url: "/dashboard/reports",
-			icon: ClipboardIcon
-		}
 	],
 
 };
@@ -75,7 +54,7 @@ export function DashboardSidebar() {
 				</SidebarMenuItem>
 			</SidebarHeader>
 			<SidebarContent>
-				<MainNav items={data.mainNavigation} />
+				<Navigation items={data.nav} />
 			</SidebarContent>
 		</Sidebar>
 	);
