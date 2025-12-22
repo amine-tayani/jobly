@@ -2,6 +2,8 @@ import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
+const description = "we are looking for a talented Software Engineer to join our team...";
+
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
 	return (
 		<input

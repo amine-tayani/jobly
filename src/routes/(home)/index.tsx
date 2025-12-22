@@ -39,7 +39,7 @@ function HomePage() {
 		<main className="mx-auto max-w-5xl px-6 py-16">
 			<div className="mb-2 text-sm text-muted-foreground">
 				<Link
-					to="/dashboard"
+					to="/dashboard/jobs"
 					className="text-muted-foreground inline-flex items-center font-medium"
 				>
 					{" "}

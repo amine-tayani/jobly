@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm"
+import { type InferSelectModel, relations } from "drizzle-orm"
 import {
 	pgEnum,
 	pgTable,
@@ -12,6 +12,8 @@ import type * as z from "zod"
 import { applications } from "./applications"
 
 export const jobTypeEnum = pgEnum("job_type", ["onsite", "hybrid", "remote"])
+
+export const jobTypeValues = jobTypeEnum.enumValues
 
 export const jobs = pgTable("jobs", {
 	id: uuid("id").defaultRandom().primaryKey(),
@@ -37,3 +39,8 @@ export const jobFormSchema = insertJobSchema.omit({
 })
 
 export type jobFormSchema = z.infer<typeof jobFormSchema>
+
+export type JobItem = Omit<
+	InferSelectModel<typeof jobs>,
+	"createdAt" | "updatedAt"
+>
