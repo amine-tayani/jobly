@@ -7,7 +7,7 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog"
 import { useState } from "react"
-import { ApplicationForm } from "./application-form"
+import { SpontaneousApplicationForm } from "./spontaneous-application-form"
 
 export function ApplySpontaneousDialog() {
 	const [open, setOpen] = useState(false)
@@ -23,7 +23,7 @@ export function ApplySpontaneousDialog() {
 				<DialogHeader>
 					<DialogTitle>Apply spontaneously</DialogTitle>
 				</DialogHeader>
-				<ApplicationForm onClose={() => setOpen(false)} />
+				<SpontaneousApplicationForm onClose={() => setOpen(false)} />
 			</DialogContent>
 		</Dialog>
 	)

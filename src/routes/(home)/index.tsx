@@ -29,51 +29,6 @@ const getJobListings = createServerFn().handler(async () => {
 	return data
 })
 
-// const jobs: Job[] = [
-// 	{
-// 		id: "1",
-// 		title: "Software engineer",
-// 		department: "Engineering",
-// 		type: "Hybrid",
-// 		location: "Rabat, Morocco",
-// 	},
-// 	{
-// 		id: "2",
-// 		title: "UX Designer",
-// 		department: "Design",
-// 		type: "Hybrid",
-// 		location: "Rabat, Morocco",
-// 	},
-// 	{
-// 		id: "3",
-// 		title: "Product Manager",
-// 		department: "Product",
-// 		type: "Hybrid",
-// 		location: "Rabat, Morocco",
-// 	},
-// 	{
-// 		id: "4",
-// 		title: "Graphic Designer",
-// 		department: "Design",
-// 		type: "Hybrid",
-// 		location: "Rabat, Morocco",
-// 	},
-// 	{
-// 		id: "5",
-// 		title: "Marketing Manager",
-// 		department: "Marketing",
-// 		type: "Hybrid",
-// 		location: "Rabat, Morocco",
-// 	},
-// 	{
-// 		id: "6",
-// 		title: "Account Manager",
-// 		department: "Customer Success",
-// 		type: "Hybrid",
-// 		location: "Rabat, Morocco",
-// 	},
-// ]
-
 function HomePage() {
 	const { data: jobs = [], isLoading } = useQuery({
 		queryKey: ["jobListings"],

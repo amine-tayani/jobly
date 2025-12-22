@@ -25,6 +25,7 @@ import { ChevronLeft } from "lucide-react"
 import * as React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { Spinner } from "./ui/spinner"
 
 export type JobInfo = Omit<
   InferSelectModel<typeof jobs>,
@@ -40,12 +41,13 @@ export function DetailedJobInfo({ data }: DetailedJobInfoProps) {
   const [resumeFileName, setResumeFileName] = React.useState<string>("")
   const resumeInputRef = React.useRef<HTMLInputElement>(null)
 
-  const form = useForm<ApplicationFormSchema>({
-    resolver: zodResolver(applicationFormSchema),
+  type FormSchema = Omit<ApplicationFormSchema, "position">
+
+  const form = useForm<FormSchema>({
+    resolver: zodResolver(applicationFormSchema.omit({ jobId: true, position: true })),
     defaultValues: {
       name: "",
       email: "",
-      position: "",
     },
   })
 
@@ -53,14 +55,39 @@ export function DetailedJobInfo({ data }: DetailedJobInfoProps) {
     mutationFn: submitApplicationFn,
     onSuccess: (data) => {
       toast.success(data.message)
+      form.reset()
+      setResumeFile(null)
+      setResumeFileName("")
     },
     onError: (error) => {
       toast.error(error.message)
     },
   })
 
-  const onSubmit = async (values: ApplicationFormSchema) => {
-    console.log(values)
+  const onSubmit = async (values: FormSchema) => {
+
+    if (!resumeFile) {
+      toast.error("Please upload your resume.")
+      return
+    }
+
+    try {
+      const formdata = new FormData()
+
+      formdata.append("name", values.name)
+      formdata.append("email", values.email)
+      formdata.append("resume", resumeFile)
+
+      formdata.append("position", data.title)
+      formdata.append("job_id", data.id)
+
+      await mutation.mutateAsync({ data: formdata })
+
+    }
+    catch (err) {
+      console.log(err)
+      toast.error("Failed to submit application.")
+    }
   }
 
   return (
@@ -81,9 +108,12 @@ export function DetailedJobInfo({ data }: DetailedJobInfoProps) {
           <p className="-my-1 text-sm text-muted-foreground">
             {data.type} · {data.location}
           </p>
-          <Button className="w-fit bg-orange-500 hover:bg-orange-600">
-            Apply
-          </Button>
+          <a href="#application-form">
+            <Button className="w-fit bg-orange-500 hover:bg-orange-600">
+              Apply
+            </Button>
+          </a>
+
         </Card>
 
         <div className="space-y-8">
@@ -191,9 +221,8 @@ export function DetailedJobInfo({ data }: DetailedJobInfoProps) {
               <li>Flexibility and a hybrid work environment.</li>
             </ul>
           </section>
-          {/* Job Application Form */}
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form id="application-form" onSubmit={form.handleSubmit(onSubmit)}>
               <Card className="h-fit rounded-xl p-6 border-none shadow-md bg-background">
                 <h2 className="text-xl font-semibold">Application</h2>
                 <div className="space-y-3 p-4">
@@ -266,6 +295,8 @@ export function DetailedJobInfo({ data }: DetailedJobInfoProps) {
                     <Input
                       ref={resumeInputRef}
                       type="file"
+                      id="resume"
+                      name="resume"
                       readOnly={mutation.isPending}
                       accept="application/pdf"
                       className="hidden"
@@ -284,15 +315,19 @@ export function DetailedJobInfo({ data }: DetailedJobInfoProps) {
                 <div className="mt-4 flex justify-end">
                   <Button
                     type="submit"
+                    disabled={mutation.isPending}
                     className="bg-orange-500 hover:bg-orange-600 w-fit"
                   >
-                    Submit application
+                    {mutation.isPending ? <>
+                      <span>Submitting</span>
+                      <Spinner className="ml-2" />
+                    </>
+                      : "Submit Application"}
                   </Button>
                 </div>
               </Card>
             </form>
           </Form>
-          {/* Job Application Form END */}
         </div>
       </div>
     </main>

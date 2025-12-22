@@ -29,17 +29,17 @@ import * as React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 
-interface ApplicationFormProps {
+interface SpontaneousApplicationFormProps {
   onClose?: () => void
 }
 
-export function ApplicationForm({ onClose }: ApplicationFormProps) {
+export function SpontaneousApplicationForm({ onClose }: SpontaneousApplicationFormProps) {
   const [resumeFile, setResumeFile] = React.useState<File | null>(null)
   const [resumeFileName, setResumeFileName] = React.useState<string>("")
   const resumeInputRef = React.useRef<HTMLInputElement>(null)
 
   const form = useForm<ApplicationFormSchema>({
-    resolver: zodResolver(applicationFormSchema),
+    resolver: zodResolver(applicationFormSchema.omit({ jobId: true })),
     defaultValues: {
       name: "",
       email: "",
@@ -90,7 +90,6 @@ export function ApplicationForm({ onClose }: ApplicationFormProps) {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 p-4"
-        encType="multipart/form-data"
       >
         <FormField
           control={form.control}

@@ -33,7 +33,6 @@ export const applicationFormSchema = insertApplicationSchema.omit({
 	createdAt: true,
 	updatedAt: true,
 	resumeUrl: true,
-	jobId: true,
 })
 
 export type ApplicationFormSchema = z.infer<typeof applicationFormSchema>
