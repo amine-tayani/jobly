@@ -13,6 +13,7 @@
 ## Features
 
 - 📋 **Job Listings**: Display all open positions with filtering by department
+- 📝 **Create Jobs**: Implement rich text editor for job descriptions and render it on the frontend.
 - 📝 **Job Applications**: Apply to specific jobs or submit spontaneous applications
 - 📊 **Dashboard**: View metrics for jobs and applications
 - 📄 **Job Details**: Detailed job descriptions with application forms
