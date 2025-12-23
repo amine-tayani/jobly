@@ -219,12 +219,11 @@ export function JobsTable({
           </div>
 
           <Button
-            variant="outline"
             size="sm"
-            className="border-border shadow-none"
+            className="border-border shadow-none bg-orange-500 hover:bg-orange-600"
             onClick={() => setIsJobSheetOpen(true)}
           >
-            Create Job
+            Add new job
           </Button>
           <CreateJobSheet
             open={isJobSheetOpen}

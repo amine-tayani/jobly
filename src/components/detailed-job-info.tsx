@@ -1,22 +1,11 @@
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { submitApplicationFn } from "@/functions/application"
 import {
   type ApplicationFormSchema,
   applicationFormSchema,
   type jobs,
 } from "@/lib/db/schema"
-import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation } from "@tanstack/react-query"
 import { Link } from "@tanstack/react-router"
@@ -25,7 +14,7 @@ import { ChevronLeft } from "lucide-react"
 import * as React from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import { Spinner } from "./ui/spinner"
+import { DescriptionViewer } from "./wysiwyg/viewer"
 
 export type JobInfo = Omit<
   InferSelectModel<typeof jobs>,
@@ -115,7 +104,7 @@ export function DetailedJobInfo({ data }: DetailedJobInfoProps) {
           </a>
 
         </Card>
-
+        {/* 
         <div className="space-y-8">
           <section>
             <h3 className="mb-2 text-lg font-semibold">What We do</h3>
@@ -328,7 +317,10 @@ export function DetailedJobInfo({ data }: DetailedJobInfoProps) {
               </Card>
             </form>
           </Form>
-        </div>
+        </div> */}
+
+        <DescriptionViewer content={data.description} />
+
       </div>
     </main>
   )

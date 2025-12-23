@@ -44,9 +44,9 @@ export function CreateJobSheet({
 
   return (
     <Sheet open={open} onOpenChange={handleOpenChange}>
-      <SheetContent className="flex flex-col min-w-[500px] p-6 rounded-lg overflow-y-auto">
+      <SheetContent className="flex flex-col min-w-[700px] p-6 rounded-lg overflow-y-auto">
         <SheetHeader className="text-lg ml-1.5">
-          <SheetTitle>Create Job</SheetTitle>
+          <SheetTitle>Create new job</SheetTitle>
         </SheetHeader>
         <FormProvider {...form}>
           <CreateJobForm onOpenChange={handleOpenChange} />

@@ -9,10 +9,12 @@ import {
 } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
 import { db } from "@/lib/db"
+import { jobs } from "@/lib/db/schema"
 import { Route as jobRoute } from "@/routes/jobs/$jobId"
 import { useQuery } from "@tanstack/react-query"
 import { Link, createFileRoute } from "@tanstack/react-router"
 import { createServerFn } from "@tanstack/react-start"
+import { desc } from "drizzle-orm"
 import { ChevronRight } from "lucide-react"
 
 export const Route = createFileRoute("/(home)/")({
@@ -25,6 +27,9 @@ const getJobListings = createServerFn().handler(async () => {
 			createdAt: false,
 			updatedAt: false,
 		},
+		orderBy: [desc(jobs.createdAt)],
+
+
 	})
 	return data
 })

@@ -1,11 +1,11 @@
 import { db } from "@/lib/db"
 import { jobFormSchema, jobs } from "@/lib/db/schema"
 import { createServerFn } from "@tanstack/react-start"
-import { eq, inArray } from "drizzle-orm"
+import { desc, eq, inArray } from "drizzle-orm"
 import z from "zod"
 
 export const getAllJobsFn = createServerFn().handler(async () => {
-	const data = await db.select().from(jobs)
+	const data = await db.select().from(jobs).orderBy(desc(jobs.createdAt))
 	return data
 })
 

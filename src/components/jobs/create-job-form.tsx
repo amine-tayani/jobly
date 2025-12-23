@@ -1,11 +1,9 @@
 import { Button } from "@/components/ui/button"
 import {
   Form,
-  FormControl,
-  FormDescription,
-  FormField,
+  FormControl, FormField,
   FormItem,
-  FormMessage,
+  FormMessage
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -24,7 +22,7 @@ import { useState } from "react"
 import { useFormContext } from "react-hook-form"
 import { toast } from "sonner"
 import type * as z from "zod"
-import { Textarea } from "../ui/textarea"
+import Editor from "../wysiwyg/editor"
 
 interface CreateJobFormProps {
   onOpenChange: (isOpen: boolean) => void
@@ -57,7 +55,7 @@ export default function CreateJobForm({ onOpenChange }: CreateJobFormProps) {
   return (
     <Form {...form}>
       <form id="create-job-form" onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="space-y-6 px-6">
+        <div className="space-y-4 px-6">
           <div className="space-y-2">
             <Label
               className="text-sm font-medium text-foreground"
@@ -107,9 +105,6 @@ export default function CreateJobForm({ onOpenChange }: CreateJobFormProps) {
                         placeholder="e.g., Rabat, Morocco"
                       />
                     </FormControl>
-                    <FormDescription>
-                      Enter the location
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -142,9 +137,6 @@ export default function CreateJobForm({ onOpenChange }: CreateJobFormProps) {
                       </SelectContent>
                     </Select>
                     <FormMessage />
-                    <FormDescription>
-                      What's the type of job?
-                    </FormDescription>
                   </FormItem>
                 )}
               />
@@ -173,9 +165,6 @@ export default function CreateJobForm({ onOpenChange }: CreateJobFormProps) {
                       placeholder="e.g., Engineering"
                     />
                   </FormControl>
-                  <FormDescription>
-                    Which department is the job for?
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -191,19 +180,12 @@ export default function CreateJobForm({ onOpenChange }: CreateJobFormProps) {
             <FormField
               control={form.control}
               name="description"
-              render={({ field }) => (
+              render={({ field: { onChange, value } }) => (
                 <FormItem>
-                  <Textarea
-                    rows={10}
-                    {...field}
-                    id="description"
-                    name="description"
-                    placeholder="e.g., We are looking for ..."
-                  />
+                  <FormControl>
+                    <Editor onChange={onChange} value={value} />
+                  </FormControl>
                   <FormMessage />
-                  <FormDescription>
-                    A brief description of what the job is for
-                  </FormDescription>
                 </FormItem>
               )}
             />

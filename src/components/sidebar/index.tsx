@@ -14,7 +14,7 @@ const data = {
 	nav: [
 		{
 			title: "Home",
-			url: "/dashboard",
+			url: "/",
 			icon: HomeIcon
 		},
 		{

@@ -79,11 +79,4 @@ export const columns: ColumnDef<JobItem>[] = [
       <DataTableColumnHeader column={column} title="Department" />
     ),
   },
-  {
-    accessorKey: "description",
-    enableSorting: false,
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Description" className="truncate" />
-    ),
-  },
 ]
