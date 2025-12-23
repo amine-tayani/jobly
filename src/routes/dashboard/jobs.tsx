@@ -14,37 +14,23 @@ function JobsDashboardPage() {
     queryFn: getAllJobsFn,
   });
 
-  const data = [
-    {
-      title: "Total Jobs",
-      value: jobs.length
-    },
-    {
-      title: "Total applications",
-      value: 9
-    },
-  ];
-
   return (
     <div className="flex h-full">
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         <div className="flex-1 overflow-y-auto flex flex-col gap-4 mx-7 mb-4">
           <div className="grid grid-cols-1 min-[1200px]:grid-cols-5 gap-4 mt-2 mb-4">
-            {data.map((item) => (
-              <Card
-                className="flex flex-col border-border dark:border-none shadow-none "
-                key={item.title}
-              >
-                <CardHeader className="relative">
-                  <CardDescription className="text-sm font-medium -mt-2">
-                    <span>{item.title}</span>
-                  </CardDescription>
-                  <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums mt-2">
-                    {item.value}
-                  </CardTitle>
-                </CardHeader>
-              </Card>
-            ))}
+            <Card
+              className="flex flex-col border-border dark:border-none shadow-none "
+            >
+              <CardHeader className="relative">
+                <CardDescription className="text-sm font-medium -mt-2">
+                  <span>Total Jobs</span>
+                </CardDescription>
+                <CardTitle className="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums mt-2">
+                  {jobs.length}
+                </CardTitle>
+              </CardHeader>
+            </Card>
           </div>
           <JobsTable data={jobs} isLoading={isLoading} />
         </div>

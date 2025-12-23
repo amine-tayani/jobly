@@ -36,7 +36,7 @@ const getJobListings = createServerFn().handler(async () => {
 
 function HomePage() {
 	const { data: jobs = [], isLoading } = useQuery({
-		queryKey: ["jobListings"],
+		queryKey: ["jobs"],
 		queryFn: getJobListings,
 	})
 

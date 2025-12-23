@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm"
+import { type InferSelectModel, relations } from "drizzle-orm"
 import { pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core"
 import { createInsertSchema } from "drizzle-zod"
 import * as z from "zod"
@@ -36,3 +36,8 @@ export const applicationFormSchema = insertApplicationSchema.omit({
 })
 
 export type ApplicationFormSchema = z.infer<typeof applicationFormSchema>
+
+export type ApplicationItem = Omit<
+	InferSelectModel<typeof applications>,
+	"createdAt" | "updatedAt" | "jobId"
+>
